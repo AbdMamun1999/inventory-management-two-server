@@ -52,9 +52,9 @@ exports.getProducts = async (req, res, next) => {
       queries.skip = skip;
       queries.limit = parseInt(limit);
     }
-    console.log(queries);
 
     const product = await getProductsService(filters, queries);
+
     res.send(product);
   } catch (error) {
     res.status(400).json({
@@ -68,9 +68,6 @@ exports.getProducts = async (req, res, next) => {
 exports.createProduct = async (req, res, next) => {
   try {
     const result = await createServiecProduct(req.body);
-    console.log(result);
-
-    result.logger();
 
     res.status(200).json({
       status: "success",
@@ -114,7 +111,6 @@ exports.updateProductById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const result = await updateProductServiceById(id, req.body);
-    console.log(result);
     res.status(200).send({
       status: true,
       message: "Product update successful",
@@ -143,7 +139,6 @@ exports.deleteProductById = async (req, res, next) => {
           data: error.message,
         });
       }
-      // console.log(result);
       res.status(200).send({
         status: true,
         message: "Successfully delete the product ",

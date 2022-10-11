@@ -1,4 +1,5 @@
 const Product = require("../models/Product");
+const Brand = require("../models/Brands");
 
 exports.getProductsService = async (filters, queries) => {
   const products = await Product.find(filters)
@@ -6,6 +7,7 @@ exports.getProductsService = async (filters, queries) => {
     .limit(queries.limit)
     .select(queries.fields)
     .sort(queries.sortBy);
+    console.log(products)
   const totalProducts = await Product.countDocuments(filters);
   const pageCount = Math.ceil(totalProducts / queries.limit);
   return { totalProducts, pageCount, products };
@@ -13,7 +15,11 @@ exports.getProductsService = async (filters, queries) => {
 
 exports.createServiecProduct = async (data) => {
   const product = await Product.create(data);
-  console.log(product);
+  // step : 1 -> id
+  const { _id: productId, brand } = product;
+  // update Brand
+  const res = await Brand.updateOne({ _id: brand.id }, { $push: { products: productId } });
+  console.log(res)
   return product;
 };
 
@@ -43,7 +49,6 @@ exports.bulkUpdateProductService = async (data) => {
   });
 
   const result = await Promise.all(products);
-  console.log(result);
   return result;
 };
 
