@@ -67,7 +67,7 @@ const stockSchema = mongoose.Schema(
       type: String,
       required: true,
       enum: {
-        value: ["in-stock", "out-of-stock", "discontinued"],
+        values: ["in-stock", "out-of-stock", "discontinued"],
         message: "status can't be {VALUE}",
       },
     },
@@ -78,15 +78,15 @@ const stockSchema = mongoose.Schema(
         required: [true, "Please provide a store name"],
         lowercase: true,
         enum: {
-          value: [
-            "Dhaka",
-            "Chattogram",
-            "Rajshahi",
-            "Sylhet",
-            "Khulna",
-            "Rangpur",
-            "Mymensingh",
-            "Barishal",
+          values: [
+            "dhaka",
+            "chattogram",
+            "rajshahi",
+            "sylhet",
+            "khulna",
+            "rangpur",
+            "mymensingh",
+            "barishal",
           ],
           message: "{VALUE} is not a valid name",
         },
@@ -120,7 +120,7 @@ const stockSchema = mongoose.Schema(
   }
 );
 
-productSchema.pre("save", function (next) {
+stockSchema.pre("save", function (next) {
   if (this.quantity === 0) {
     this.status = "out-of-stock";
   }

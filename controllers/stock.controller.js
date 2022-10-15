@@ -6,7 +6,8 @@ const {
   deleteStockByIdService,
 //   bulkDeletdStockService,
   getStockByIdService,
-} = require("../services/Product.service");
+} = require("../services/stock.service");
+// console.log(createcStockServie)
 
 exports.getStocks = async (req, res, next) => {
   try {
